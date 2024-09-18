@@ -1,8 +1,15 @@
+import "./App.css";
+import UserCard from "./Components/UserCard";
+import UserCardClass from "./Components/UserCardClass";
+import user from "./user.json";
 
-function App() {
+const App = () => {
   return (
-      <h1>My App</h1>
+    <>
+      <UserCard {...user} />
+      <UserCardClass {...user} />
+    </>
   );
-}
+};
 
 export default App;
