@@ -1,7 +1,18 @@
+import { useState } from "react";
 
 function App() {
+  const [name, setName] = useState("");
+  const [age, setAge] = useState(0);
   return (
-      <h1>My App</h1>
+    <>
+      <input type="text" name="name" id="name" value={name} onInput={(e) => setName(e.target.value)}/>
+      <div className="counter">
+        <button onClick={() => setAge(p => p - 1)}>-</button>
+        {age}
+        <button onClick={() => setAge(p => p + 1)}>+</button>
+      </div>
+      <p>{`My name is ${name} and I am ${age} years old`}</p>
+    </>
   );
 }
 
