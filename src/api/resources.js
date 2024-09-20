@@ -26,4 +26,21 @@ const getUser = (userId, options) => {
   return baseApi.get(`users/${userId}`, options).then((res) => res.data);
 };
 
-export { getComments, getPost, getPosts, getTodos, getUser, getUsers };
+const createPost = (data, options) => {
+  return baseApi.post("posts", data, options).then((res) => res.data);
+};
+
+const updatePost = (postId, data, options) => {
+  return baseApi.put(`posts/${postId}`, data, options).then((res) => res.data);
+};
+
+export {
+  getComments,
+  getPost,
+  getPosts,
+  getTodos,
+  getUser,
+  getUsers,
+  createPost,
+  updatePost,
+};

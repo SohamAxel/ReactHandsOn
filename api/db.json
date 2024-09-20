@@ -4003,7 +4003,6 @@
       "body": "perspiciatis quis doloremque\nveniam nisi eos velit sed\nid totam inventore voluptatem laborum et eveniet\naut aut aut maxime quia temporibus ut omnis"
     }
   ],
-
   "photos": [
     {
       "albumId": 1,
@@ -39006,7 +39005,6 @@
       "thumbnailUrl": "https://via.placeholder.com/150/6dd9cb"
     }
   ],
-
   "posts": [
     {
       "userId": 1,
@@ -39607,6 +39605,24 @@
       "id": 100,
       "title": "at nam consequatur ea labore ea harum",
       "body": "cupiditate quo est a modi nesciunt soluta\nipsa voluptas error itaque dicta in\nautem qui minus magnam et distinctio eum\naccusamus ratione error aut"
+    },
+    {
+      "title": "Title AMN",
+      "body": "Body ABV",
+      "userId": "9",
+      "id": 101
+    },
+    {
+      "title": "Title B",
+      "body": "Body B",
+      "userId": "1",
+      "id": 102
+    },
+    {
+      "title": "Title C",
+      "body": "Body C",
+      "userId": "4",
+      "id": 103
     }
   ],
   "todos": [
@@ -40811,7 +40827,6 @@
       "completed": false
     }
   ],
-
   "users": [
     {
       "id": 1,

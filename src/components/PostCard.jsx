@@ -16,6 +16,9 @@ const PostCard = ({userId, id, title, body}) => {
           <Link className="btn" to={`${id}`}>
             View
           </Link>
+          <Link className="btn" to={`${id}/edit`}>
+            Edit
+          </Link>
         </div>
       </div>
     </>
