@@ -16,7 +16,7 @@ const DialogModal = () => {
       <button onClick={() => toggleModal()}>DialogModal</button>
       <DialogModalPortal hideModal={hideModal} showDialogModal={showDialogModal}>
         <p>
-          This is a <strong>CUSTOM</strong> modal
+          This is a <strong>DIALOG</strong> modal
         </p>
       </DialogModalPortal>
     </>
