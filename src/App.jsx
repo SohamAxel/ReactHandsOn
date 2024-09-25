@@ -1,16 +1,44 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import CalendarDays from "./Components/CalendarDays";
 import CalendarHeader from "./Components/CalendarHeader";
 import "./styles.css";
 import { addMonths } from "date-fns";
 
 export const CalendarContext = createContext();
+export const EventContext = createContext();
 
 function App() {
   const [currentDate, setCurrentMonth] = useState(new Date());
-
+  const [events, setEvents] = useState([]);
   const setCurrentMonthToToday = () => {
     setCurrentMonth(new Date());
+  };
+
+  const handleEventAdd = (event) => {
+    setEvents((e) => {
+      return [
+        ...e,
+        {
+          id: crypto.randomUUID(),
+          ...event,
+        },
+      ];
+    });
+  };
+
+  const handleEventUpdate = (id, event) => {
+    setEvents((prevEvents) => {
+      return prevEvents.map((e) => {
+        if (e.id == id) return { id, ...event };
+        return e;
+      });
+    });
+  };
+
+  const handleEventDelete = (id) => {
+    setEvents((prevEvents) => {
+      return prevEvents.filter((e) => e.id !== id);
+    });
   };
 
   const handleNextMonth = () => {
@@ -29,10 +57,17 @@ function App() {
         handlePrevMonth,
       }}
     >
-      <div className="calendar">
-        <CalendarHeader />
-        <CalendarDays />
-      </div>
+      <EventContext.Provider value={{
+        events,
+        handleEventAdd,
+        handleEventUpdate,
+        handleEventDelete
+      }}>
+        <div className="calendar">
+          <CalendarHeader />
+          <CalendarDays />
+        </div>
+      </EventContext.Provider>
     </CalendarContext.Provider>
   );
 }
