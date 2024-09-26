@@ -1,8 +1,6 @@
+import { StateForm } from "./StateForm"
+import "./styles.css"
 
-function App() {
-  return (
-      <h1>My App</h1>
-  );
+export default function App() {
+  return <StateForm onSubmit={() => alert("Success")} />
 }
-
-export default App;
