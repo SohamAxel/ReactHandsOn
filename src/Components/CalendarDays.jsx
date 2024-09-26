@@ -63,6 +63,11 @@ const CalendarDay = ({ date, currentDate, index }) => {
   const nonAllDayEvents = useMemo(() => {
     return filteredEvents.filter((event) => !event.allDay);
   }, [filteredEvents]);
+
+  const sortedEvents = {
+    ...allDayEvents,
+    nonAllDayEvents
+  };
   const handleCloseEventForm = () => {
     setOpenEventModal(false);
   };
@@ -84,22 +89,11 @@ const CalendarDay = ({ date, currentDate, index }) => {
         </div>
         <div className="events">
           {allDayEvents.map((event) => {
-            return (
-              <button
-                key={event.id}
-                className={`all-day-event ${event.color} event`}
-              >
-                <div className="event-name">{event.name}</div>
-              </button>
-            );
+            return <CalendarEvent key={event.id} allDay={true} event={event} />;
           })}
           {nonAllDayEvents.map((event) => {
             return (
-              <button key={event.id} className="event">
-                <div className={`color-dot ${event.color}`}></div>
-                <div className="event-time">{event.startTime}</div>
-                <div className="event-name">{event.name}e</div>
-              </button>
+              <CalendarEvent key={event.id} allDay={false} event={event} />
             );
           })}
         </div>
@@ -107,9 +101,60 @@ const CalendarDay = ({ date, currentDate, index }) => {
       <CustomModal
         handleCloseEventForm={handleCloseEventForm}
         openEventModal={openEventModal}
+        title={<TitleComponent date={date} title={"Add Event"} />}
       >
         <EventForm date={date} handleCloseEventForm={handleCloseEventForm} />
       </CustomModal>
+    </>
+  );
+};
+
+const CalendarEvent = ({ allDay, event }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+  return (
+    <>
+      <button
+        key={event.id}
+        className={`${allDay ? "all-day-event" : ""} ${event.color} event`}
+        onClick={handleModalOpen}
+      >
+        {allDay ? (
+          <div className="event-name">{event.name}</div>
+        ) : (
+          <>
+            <div className={`color-dot ${event.color}`}></div>
+            <div className="event-time">{event.startTime}</div>
+            <div className="event-name">{event.name}</div>
+          </>
+        )}
+      </button>
+      <CustomModal
+        title={<TitleComponent date={event.date} title={"Edit Event"} />}
+        handleCloseEventForm={handleModalClose}
+        openEventModal={modalOpen}
+      >
+        <EventForm
+          date={event.date}
+          handleCloseEventForm={handleModalClose}
+          defaultValues={event}
+        />
+      </CustomModal>
+    </>
+  );
+};
+
+const TitleComponent = ({ date, title }) => {
+  return (
+    <>
+      <div>{title}</div>
+      <small>{`${format(date, "LL/dd/yy")}`}</small>
     </>
   );
 };

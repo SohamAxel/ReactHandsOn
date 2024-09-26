@@ -3,7 +3,6 @@ import { createPortal } from "react-dom";
 
 const CustomModal = ({ children, title, handleCloseEventForm, openEventModal }) => {
   if (!openEventModal) return null;
-
   return createPortal(
     <div className="modal">
       <div className="overlay"></div>

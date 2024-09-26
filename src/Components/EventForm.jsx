@@ -3,18 +3,15 @@ import { EventContext } from "../App";
 
 const colors = ["blue", "red", "green"];
 
-const EventForm = ({
-  defaultValues: { allDay: defaultAllDay, color: defaultcolor } = {},
-  date,
-  handleCloseEventForm,
-}) => {
+const EventForm = ({ defaultValues = {}, date, handleCloseEventForm }) => {
   const nameRef = useRef();
-  const [allDay, setAllDay] = useState(defaultAllDay ?? true);
-  const [currentColor, setColor] = useState(colors[0]);
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const { handleEventAdd } = useContext(EventContext);
-
+  const [allDay, setAllDay] = useState(defaultValues.allDay ?? true);
+  const [currentColor, setColor] = useState(defaultValues.color ?? colors[0]);
+  const [startTime, setStartTime] = useState(defaultValues.startTime ?? "");
+  const [endTime, setEndTime] = useState(defaultValues.endTime ?? "");
+  const { handleEventAdd, handleEventUpdate, handleEventDelete } =
+    useContext(EventContext);
+  console.log(defaultValues);
   const handleSubmit = (e) => {
     e.preventDefault();
     const event = {
@@ -38,8 +35,11 @@ const EventForm = ({
       event.allDay = true;
     }
     event.color = currentColor;
-
-    handleEventAdd(event);
+    if (defaultValues.id) {
+      handleEventUpdate(defaultValues.id, event);
+    } else {
+      handleEventAdd(event);
+    }
     handleCloseEventForm();
   };
 
@@ -53,7 +53,7 @@ const EventForm = ({
           id="name"
           required
           ref={nameRef}
-          defaultValue=""
+          defaultValue={defaultValues.name}
         />
       </div>
       <div className="form-group checkbox">
@@ -118,11 +118,19 @@ const EventForm = ({
       </div>
       <div className="row">
         <button className="btn btn-success" type="submit">
-          Add
+          {
+            defaultValues.id ? "Edit" : "Add"
+          }
         </button>
-        <button className="btn btn-delete" type="button">
-          Delete
-        </button>
+        {defaultValues.id && (
+          <button
+            className="btn btn-delete"
+            type="button"
+            onClick={() => handleEventDelete(defaultValues.id)}
+          >
+            Delete
+          </button>
+        )}
       </div>
     </form>
   );
