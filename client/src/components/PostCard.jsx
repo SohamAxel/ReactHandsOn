@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { Skeleton, SkeletonButton } from "./Skeleton";
 
 export function PostCard({ id, title, body }) {
   return (
@@ -13,5 +14,28 @@ export function PostCard({ id, title, body }) {
         </Link>
       </div>
     </div>
-  )
+  );
 }
+
+const SkeletonPostCard = () => {
+  return (
+    <div className="card">
+      <div className="card-header">
+        <Skeleton short />
+      </div>
+      <div className="card-body">
+        <div className="card-preview-text">
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+        </div>
+      </div>
+      <div className="card-footer">
+        <SkeletonButton />
+      </div>
+    </div>
+  );
+};
+
+export { SkeletonPostCard };
