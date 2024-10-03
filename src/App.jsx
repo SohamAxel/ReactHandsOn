@@ -3,13 +3,14 @@ import CalendarDays from "./Components/CalendarDays";
 import CalendarHeader from "./Components/CalendarHeader";
 import "./styles.css";
 import { addMonths } from "date-fns";
+import useLocalStorage from "./Hooks/useLocalStorage.js";
 
 export const CalendarContext = createContext();
 export const EventContext = createContext();
 
 function App() {
   const [currentDate, setCurrentMonth] = useState(new Date());
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useLocalStorage([]);
   const setCurrentMonthToToday = () => {
     setCurrentMonth(new Date());
   };
@@ -57,12 +58,14 @@ function App() {
         handlePrevMonth,
       }}
     >
-      <EventContext.Provider value={{
-        events,
-        handleEventAdd,
-        handleEventUpdate,
-        handleEventDelete
-      }}>
+      <EventContext.Provider
+        value={{
+          events,
+          handleEventAdd,
+          handleEventUpdate,
+          handleEventDelete,
+        }}
+      >
         <div className="calendar">
           <CalendarHeader />
           <CalendarDays />
