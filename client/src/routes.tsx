@@ -6,6 +6,7 @@ import { NewTaskPage } from "@/pages/tasks/NewTaskPage"
 import { NotFoundPage } from "@/pages/NotFoundPage"
 import SignupForm from "./features/authentication/components/SignupForm"
 import AuthLayout from "./features/authentication/Layouts/AuthLayout"
+import LoginForm from "./features/authentication/components/LoginForm"
 
 export const routes: RouteObject[] = [
   {
@@ -31,7 +32,10 @@ export const routes: RouteObject[] = [
             children: [
               { 
                 path: "signup", element: <SignupForm />
-              }
+              },
+              { 
+                path: "login", element: <LoginForm />
+              },
             ]
           },
           { path: "*", element: <NotFoundPage /> },

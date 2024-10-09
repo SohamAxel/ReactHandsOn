@@ -3,16 +3,21 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuSub,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import { useLayoutEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Menu, Moon, Sun } from "lucide-react";
+import { ChevronDown, Menu, Moon, Sun } from "lucide-react";
 import { useAuth } from "@/features/authentication/contexts/AuthProvider";
 
 const RootNavbar = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   return (
     <nav className="sticky top-0 z-50 bg-white dark:bg-slate-950">
       <div className="container my-4 flex justify-between">
@@ -24,7 +29,28 @@ const RootNavbar = () => {
           <div className="hidden sm:flex">
             <NavItem to="/" label="Task Board" />
             <NavItem to="/" label="Job Listings" />
-            { user ? user.name : ''}
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800"
+                  >
+                    <span>{user.email}</span>
+                    <ChevronDown className="w-4 h-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem asChild>
+                    <Link to="/jobs/my-listings">My Listings</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <NavItem to="/login" label="Login" />
+            )}
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="flex sm:hidden">
@@ -43,6 +69,30 @@ const RootNavbar = () => {
               <DropdownMenuItem asChild>
                 <Link to="/">Job Listings</Link>
               </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              {user ? (
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger asChild>
+                    <span className="mr-auto">{user.email}</span>
+                    <ChevronDown className="w-4 h-4 ml-2" />
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuItem asChild>
+                        <Link to="/jobs/my-listings">My Listings</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={logout}>
+                        Logout
+                      </DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
+              ) : (
+                <DropdownMenuItem asChild>
+                  <Link to="/login">Login</Link>
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
