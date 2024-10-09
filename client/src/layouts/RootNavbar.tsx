@@ -9,8 +9,10 @@ import { useLayoutEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Menu, Moon, Sun } from "lucide-react";
+import { useAuth } from "@/features/authentication/contexts/AuthProvider";
 
 const RootNavbar = () => {
+  const { user } = useAuth();
   return (
     <nav className="sticky top-0 z-50 bg-white dark:bg-slate-950">
       <div className="container my-4 flex justify-between">
@@ -22,6 +24,7 @@ const RootNavbar = () => {
           <div className="hidden sm:flex">
             <NavItem to="/" label="Task Board" />
             <NavItem to="/" label="Job Listings" />
+            { user ? user.name : ''}
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="flex sm:hidden">
