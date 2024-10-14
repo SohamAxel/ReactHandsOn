@@ -5,27 +5,21 @@ import * as React from "react";
 import "./styles.css";
 import useLocalStorage from "./Hooks/useLocalStorage";
 
-function Board() {
-  const defaultSquares = Array(9).fill(null);
-  const [squares, setSquares] = useLocalStorage('tictactoe', defaultSquares);
+function Board({ squares, step, setSquares, resetGame }) {
   const nextValue = calculateNextValue(squares);
   const winner = calculateWinner(squares);
-  const winnerStatus = calculateStatus(
-    winner,
-    squares,
-    nextValue
-  );
+  const winnerStatus = calculateStatus(winner, squares, nextValue);
   function selectSquare(square) {
     if (winner || squares[square] !== null) {
       return;
     }
     const squareCopy = [...squares];
     squareCopy[square] = nextValue;
-    setSquares(squareCopy);
+    setSquares(step, squareCopy);
   }
 
   function restart() {
-    setSquares(defaultSquares);
+    resetGame();
   }
 
   function renderSquare(i) {
@@ -62,10 +56,40 @@ function Board() {
 }
 
 function Game() {
+  const defaultSquares = Array(9).fill(null);
+  const [step, setStep] = useLocalStorage("tictactoe-step", 0);
+  const [history, setHistory] = useLocalStorage("tictactoe-history", [
+    defaultSquares,
+  ]);
+  const updateHistory = (step, squares) => {
+    let historyCopy = history.filter((value, index) => index < step);
+    historyCopy = [...historyCopy, squares];
+    setHistory(historyCopy);
+    setStep((prevStep) => prevStep + 1);
+  };
+
+  const resetGame = () => {
+    setHistory([defaultSquares]);
+    setStep(0);
+  };
   return (
     <div className="game">
       <div className="game-board">
-        <Board />
+        <Board
+          squares={history[step]}
+          step={step + 1}
+          setSquares={updateHistory}
+          resetGame={resetGame}
+        />
+        {history.map((value, index) => (
+          <button
+            key={index}
+            onClick={() => setStep(index)}
+            disabled={step === index}
+          >
+            Step {index + 1} {step === index ? "(current)" : ""}
+          </button>
+        ))}
       </div>
     </div>
   );
