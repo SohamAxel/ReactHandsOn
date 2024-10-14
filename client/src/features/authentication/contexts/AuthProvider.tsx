@@ -25,14 +25,14 @@ export function AuthProvider({ children }) {
       });
   }, []);
 
-  const signup = (email: string, password: string) => {
+  const signup = (email, password) => {
     return signupService(email, password).then((user) => {
       setUser(user);
       navigate(location.state?.location ?? "/");
     });
   }
 
-  const login = (email: string, password: string) => {
+  const login = (email, password) => {
     return loginService(email, password).then((user) => {
       setUser(user);
       navigate("/");

@@ -28,7 +28,7 @@ const RootNavbar = () => {
           <ThemeDropDownButton />
           <div className="hidden sm:flex">
             <NavItem to="/" label="Task Board" />
-            <NavItem to="/" label="Job Listings" />
+            <NavItem to="/jobs" label="Job Listings" />
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -67,7 +67,7 @@ const RootNavbar = () => {
                 <Link to="/">Task Board</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to="/">Job Listings</Link>
+                <Link to="/jobs">Job Listings</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               {user ? (
@@ -126,14 +126,16 @@ const ThemeDropDownButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Button variant="ghost" size="icon">
+        {/* <Button variant="ghost" size="icon" asChild> */}
+          {/* <div> */}
           {theme == "dark" ? (
             <Moon className="h-5 w-5 scale-0 dark:scale-100 transition-transform" />
           ) : (
             <Sun className="h-5 w-5 scale-100 dark:scale-0 transition-transform" />
           )}
+          {/* </div> */}
           <span className="sr-only">Toggle Theme</span>
-        </Button>
+        {/* </Button> */}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem onClick={() => setTheme("light")}>

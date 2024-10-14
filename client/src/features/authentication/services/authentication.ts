@@ -16,8 +16,8 @@ const logout = () => {
   return baseApi.delete("users/logout");
 };
 
-export function getLoggedInUser() {
+const getLoggedInUser = () => {
   return baseApi.get("users/session").then((res) => res.data ?? undefined);
-}
+};
 
-export { login, signup, logout };
+export { login, signup, logout, getLoggedInUser };

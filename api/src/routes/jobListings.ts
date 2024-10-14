@@ -12,7 +12,8 @@ export const jobListingsRouter = Router()
 
 jobListingsRouter.get("/published", async (req, res) => {
   res.json(
-    await db.jobListing.findMany({ where: { expiresAt: { gt: new Date() } } })
+    // await db.jobListing.findMany({ where: { expiresAt: { gt: new Date() } } })
+    await db.jobListing.findMany()
   )
 })
 
