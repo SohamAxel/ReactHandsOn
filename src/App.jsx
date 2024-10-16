@@ -31,7 +31,7 @@ const ToggleOff = ({ children }) => {
   return !on ? children : "";
 };
 const ToggleButton = () => {
-  const { setOn } = useContext(Context);
+  const { on, setOn } = useContext(Context);
   const toggle = () => setOn((p) => !p);
   return <Switch on={on} onClick={toggle} />;
 };
