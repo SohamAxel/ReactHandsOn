@@ -15,6 +15,7 @@ import {
 } from "date-fns";
 import CustomModal from "./CustomModal";
 import EventForm from "./EventForm";
+import OverflowContainer from "./OverflowContainer";
 
 const day = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
@@ -66,7 +67,7 @@ const CalendarDay = ({ date, currentDate, index }) => {
 
   const sortedEvents = {
     ...allDayEvents,
-    nonAllDayEvents
+    nonAllDayEvents,
   };
   const handleCloseEventForm = () => {
     setOpenEventModal(false);
@@ -87,16 +88,11 @@ const CalendarDay = ({ date, currentDate, index }) => {
             +
           </button>
         </div>
-        <div className="events">
-          {allDayEvents.map((event) => {
-            return <CalendarEvent key={event.id} allDay={true} event={event} />;
-          })}
-          {nonAllDayEvents.map((event) => {
-            return (
-              <CalendarEvent key={event.id} allDay={false} event={event} />
-            );
-          })}
-        </div>
+        <OverflowContainer
+          allDayEvents={allDayEvents}
+          nonAllDayEvents={nonAllDayEvents}
+          date={date}
+        />
       </div>
       <CustomModal
         handleCloseEventForm={handleCloseEventForm}
@@ -109,7 +105,7 @@ const CalendarDay = ({ date, currentDate, index }) => {
   );
 };
 
-const CalendarEvent = ({ allDay, event }) => {
+export const CalendarEvent = ({ allDay, event }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleModalOpen = () => {

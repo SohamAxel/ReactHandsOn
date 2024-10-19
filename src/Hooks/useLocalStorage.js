@@ -17,7 +17,6 @@ const useLocalStorage = (value) => {
   });
 
   useEffect(() => {
-    console.log("data changed");
     if (data) {
       localStorage.setItem(key, JSON.stringify(data));
     } else {
